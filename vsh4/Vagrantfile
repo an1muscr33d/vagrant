@@ -1,0 +1,24 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.define "vsh4" do |vsh4|
+    vsh4.vm.box = "centos/7"
+    vsh4.vm.provider :libvirt do |domain|
+      domain.memory = 2048
+      domain.cpus = 1
+    end
+
+    vsh4.vm.provision "shell",
+      inline: "yum install -y epel-release pygpgme yum-utils"
+
+    vsh4.vm.provision "file",
+      source: "files/vsh_repo", destination: "/tmp/varnishcache_varnish41.repo"
+
+    vsh4.vm.provision "shell",
+      inline: "cp /tmp/varnishcache_varnish41.repo /etc/yum.repos.d/varnishcache_varnish41.repo",
+      privileged: true
+
+    vsh4.vm.provision "shell",
+      inline: "yum install -y varnish"
+  end
+
+end

@@ -1,0 +1,24 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.define "vsh6" do |vsh6|
+    vsh6.vm.box = "centos/7"
+    vsh6.vm.provider :libvirt do |domain|
+      domain.memory = 2048
+      domain.cpus = 1
+    end
+
+    vsh6.vm.provision "shell",
+      inline: "yum install -y epel-release pygpgme yum-utils"
+
+    vsh6.vm.provision "file",
+      source: "files/vsh_repo", destination: "/tmp/varnishcache_varnish60lts.repo"
+
+    vsh6.vm.provision "shell",
+      inline: "cp /tmp/varnishcache_varnish60lts.repo /etc/yum.repos.d/varnishcache_varnish60lts.repo",
+      privileged: true
+
+    vsh6.vm.provision "shell",
+      inline: "yum install -y varnish"
+  end
+
+end

@@ -1,0 +1,8 @@
+# workdirectory
+.vagrant/
+*console.log
+
+# source code locations
+kong/
+kong-plugin/
+

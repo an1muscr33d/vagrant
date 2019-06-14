@@ -1,0 +1,3 @@
+[submodule "kong-vagrant"]
+	path = kong-vagrant
+	url = git@github.com:an1muscr33d/kong-vagrant.git
